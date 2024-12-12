@@ -196,36 +196,6 @@ pub fn main() void {
             }
         }
     }
-    std.debug.print("-----------------------------\n", .{});
-    {
-        var i: usize = 0;
-        while (i < 2) : (i += 1) {
-            var j: usize = 0;
-            while (j < 2) : (j += 1) {
-                std.debug.print("{} - {} = {d:.6}\n", .{ i, j, sigmoidf(model.or_w1 * @as(f32, @floatFromInt(i)) + model.or_w2 * @as(f32, @floatFromInt(j)) + model.or_b) });
-            }
-        }
-    }
-    std.debug.print("-----------------------------\n", .{});
-    {
-        var i: usize = 0;
-        while (i < 2) : (i += 1) {
-            var j: usize = 0;
-            while (j < 2) : (j += 1) {
-                std.debug.print("{} - {} = {d:.6}\n", .{ i, j, sigmoidf(model.nand_w1 * @as(f32, @floatFromInt(i)) + model.nand_w2 * @as(f32, @floatFromInt(j)) + model.nand_b) });
-            }
-        }
-    }
-    std.debug.print("-----------------------------\n", .{});
-    {
-        var i: usize = 0;
-        while (i < 2) : (i += 1) {
-            var j: usize = 0;
-            while (j < 2) : (j += 1) {
-                std.debug.print("{} - {} = {d:.6}\n", .{ i, j, sigmoidf(model.and_w1 * @as(f32, @floatFromInt(i)) + model.and_w2 * @as(f32, @floatFromInt(j)) + model.and_b) });
-            }
-        }
-    }
 }
 
 fn sigmoidf(x: f32) f32 {
