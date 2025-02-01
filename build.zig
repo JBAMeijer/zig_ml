@@ -6,6 +6,16 @@ const std = @import("std");
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
+
+    const mlp = b.addExecutable(.{
+        .name = "mlp",
+        .root_source_file = b.path("src/mlp.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+
+    b.installArtifact(mlp);
+
     const twice_exe = b.addExecutable(.{
         .name = "zig_ml_twice",
         .root_source_file = b.path("src/twice.zig"),
@@ -32,6 +42,17 @@ pub fn build(b: *std.Build) void {
     });
 
     b.installArtifact(gate_xor_exe);
+
+    // Run commands
+    const mlp_run_cmd = b.addRunArtifact(mlp);
+    mlp_run_cmd.step.dependOn(b.getInstallStep());
+
+    if (b.args) |args| {
+        mlp_run_cmd.addArgs(args);
+    }
+
+    const mlp_run_step = b.step("mlprun", "Run the mlp app");
+    mlp_run_step.dependOn(&mlp_run_cmd.step);
 
     const run_cmd = b.addRunArtifact(twice_exe);
     run_cmd.step.dependOn(b.getInstallStep());
